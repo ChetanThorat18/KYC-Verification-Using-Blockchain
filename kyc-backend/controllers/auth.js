@@ -27,25 +27,46 @@ const signup = async (req, res) => {
 };
 
 const login = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const user = await User.findOne({ email });
-    
-        if (!user) return res.status(400).json({ message: "Invalid credentials" });
-    
-        // Compare passwords
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
-    
-        // Generate JWT
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
-    
-        res.json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
-      } catch (error) {
-        console.error("Login Error:", error); 
-        res.status(500).json({ error: "Login failed" });
-      }
-  };
-  
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
-  module.exports = { signup, login };
+    if (!user) return res.status(400).json({ message: "Invalid credentials" });
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    // Set HTTP-only cookie
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+    });
+
+    res.json({
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }
+    });
+  } catch (error) {
+    console.error("Login Error:", error);
+    res.status(500).json({ error: "Login failed" });
+  }
+};
+
+const logout = (req, res) => {
+  res.clearCookie('token');
+  res.json({ message: "Logged out successfully" });
+};
+
+module.exports = { signup, login, logout };
