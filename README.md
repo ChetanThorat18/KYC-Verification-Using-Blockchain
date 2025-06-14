@@ -154,20 +154,3 @@ For detailed setup instructions, please refer to [SETUP.md](SETUP.md).
 4. Push to the branch
 5. Create a Pull Request
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Support
-
-For support, please:
-1. Check the [documentation](SETUP.md)
-2. Open an issue in the repository
-3. Contact the development team
-
-## Acknowledgments
-
-- Ethereum Foundation
-- Truffle Suite
-- IPFS
-- MetaMask 
