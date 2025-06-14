@@ -25,7 +25,7 @@ This guide will help you set up and run the Decentralized KYC System locally on 
 
 ### 1. Clone the Repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/ChetanThorat18/KYC-Verification-Using-Blockchain
 cd sample-decentralised-kyc-ethereum-main
 ```
 
@@ -154,22 +154,6 @@ cd blockchain
 npx truffle test
 ```
 
-## Security Considerations
-
-1. **Private Keys**
-   - Never share private keys
-   - Use different accounts for different roles
-   - Keep test accounts separate from production
-
-2. **Environment Variables**
-   - Keep `.env` files secure
-   - Never commit sensitive data
-   - Use environment variables for configuration
-
-3. **Network Security**
-   - Use HTTPS in production
-   - Implement proper access controls
-   - Regular security audits
 
 ## Support
 
@@ -177,7 +161,3 @@ For issues and support:
 1. Check the console for error messages
 2. Review the documentation
 3. Create an issue in the repository
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details. 
